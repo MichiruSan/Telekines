@@ -1,0 +1,48 @@
+-- Create the ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ 
+-- Create the main frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 200, 0, 100)
+mainFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
+mainFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+mainFrame.BorderSizePixel = 5
+mainFrame.BorderColor3 = Color3.new(0.5, 0, 0.5)
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Parent = screenGui
+ 
+-- Create the text box
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(0, 180, 0, 30)
+textBox.Position = UDim2.new(0, 10, 0, 10)
+textBox.PlaceholderText = "Enter speed (16-1000)"
+textBox.Text = ""
+textBox.Parent = mainFrame
+ 
+-- Create the button
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 180, 0, 30)
+button.Position = UDim2.new(0, 10, 0, 50)
+button.Text = "Go"
+button.Parent = mainFrame
+ 
+-- Function to set the player's speed
+local function setSpeed(speed)
+    local character = game.Players.LocalPlayer.Character
+    if character and character:FindFirstChild("Humanoid") then
+        character.Humanoid.WalkSpeed = speed
+    end
+end
+ 
+-- Button click event
+button.MouseButton1Click:Connect(function()
+    local speed = tonumber(textBox.Text)
+    if speed and speed >= 16 and speed <= 1000 then
+        setSpeed(speed)
+    else
+        textBox.Text = "Invalid speed"
+    end
+end)
+ 
